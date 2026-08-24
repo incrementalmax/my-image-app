@@ -2,34 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Generator</title>
+    <title>My Personal AI Sandbox</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 40px; background: #fafafa; }
+        /* Style for the typing input box */
+        input { font-size: 16px; padding: 12px; width: 350px; border-radius: 6px; border: 1px solid #ccc; margin-right: 10px; }
+        button { font-size: 16px; padding: 12px 24px; cursor: pointer; border-radius: 6px; border: 1px solid #ddd; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button:hover { background: #f5f5f5; }
+        #gallery { margin-top: 25px; }
+        img { width: 500px; height: 500px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    </style>
 </head>
-<body>
-
-    <button onclick="makeImage()">Generate Image</button>
-    <div id="gallery"></div>
-
-    <script>
-        function makeImage() {
-            const gallery = document.getElementById('gallery');
-            gallery.innerText = "The AI is drawing... please wait...";
-
-            const img = document.createElement('img');
-            const randomSeed = Math.floor(Math.random() * 100000);
-            
-            // This is the direct public link that works everywhere
-            img.src = "https://pollinations.ai" + randomSeed;
-
-            img.onload = function() {
-                gallery.innerText = ""; 
-                gallery.appendChild(img); 
-            };
-
-            img.onerror = function() {
-                gallery.innerText = "Could not load image.";
-            };
-        }
-    </script>
-
-</body>
-</html>
