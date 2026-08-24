@@ -2,6 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>AI Generator</title>
+</head>
+<body>
+
+    <!-- Typable text box -->
+    <input type="text" id="myPrompt" value="a cute puppy sitting in a teacup" style="font-size: 16px; padding: 10px; width: 300px;">
+    
+    <!-- Action button -->
+    <button onclick="openAIImage()" style="font-size: 16px; padding: 10px 20px; cursor: pointer;">
+        Generate and Open Image
+    </button>
+
+    <script>
+        function openAIImage() {
+            // 1. Grab whatever words you typed into the box
+            var userWords = document.getElementById('myPrompt').value;
+            
+            // 2. Clean the words so web links can read them safely
+            var cleanedWords = encodeURIComponent(userWords);
+            
+            // 3. Create a unique random code so the AI draws a brand new image every single time
+            var randomCode = Math.floor(Math.random() * 99999);
+            
+            // 4. Construct the direct image URL link
+            var finalLink = "https://pollinations.ai" + cleanedWords + "?width=600&height=600&seed=" + randomCode;
+            
+            // 5. Force the browser to open the image directly in a clean new tab, bypassing all blocks!
+            window.open(finalLink, '_blank');
+        }
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Generator</title>
     <style>
