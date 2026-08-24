@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Generator</title>
+</head>
+<body>
+
+    <button onclick="makeImage()">Generate Image</button>
+    <div id="gallery"></div>
+
+    <script>
+        function makeImage() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerText = "The AI is drawing... please wait...";
+
+            const img = document.createElement('img');
+            const randomSeed = Math.floor(Math.random() * 100000);
+            
+            // This is the direct public link that works everywhere
+            img.src = "https://pollinations.ai" + randomSeed;
+
+            img.onload = function() {
+                gallery.innerText = ""; 
+                gallery.appendChild(img); 
+            };
+
+            img.onerror = function() {
+                gallery.innerText = "Could not load image.";
+            };
+        }
+    </script>
+
+</body>
+</html>
