@@ -2,44 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Generator</title>
-</head>
-<body>
-
-    <!-- Typable text box -->
-    <input type="text" id="myPrompt" value="a cute puppy sitting in a teacup" style="font-size: 16px; padding: 10px; width: 300px;">
-    
-    <!-- Action button -->
-    <button onclick="openAIImage()" style="font-size: 16px; padding: 10px 20px; cursor: pointer;">
-        Generate and Open Image
-    </button>
-
-    <script>
-        function openAIImage() {
-            // 1. Grab whatever words you typed into the box
-            var userWords = document.getElementById('myPrompt').value;
-            
-            // 2. Clean the words so web links can read them safely
-            var cleanedWords = encodeURIComponent(userWords);
-            
-            // 3. Create a unique random code so the AI draws a brand new image every single time
-            var randomCode = Math.floor(Math.random() * 99999);
-            
-            // 4. Construct the direct image URL link
-            var finalLink = "https://pollinations.ai" + cleanedWords + "?width=600&height=600&seed=" + randomCode;
-            
-            // 5. Force the browser to open the image directly in a clean new tab, bypassing all blocks!
-            window.open(finalLink, '_blank');
-        }
-    </script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Generator</title>
+    <title>Instant Image Sandbox</title>
     <style>
         body { font-family: sans-serif; text-align: center; padding: 40px; background: #fafafa; }
         input { font-size: 16px; padding: 12px; width: 350px; border-radius: 6px; border: 1px solid #ccc; margin-right: 10px; }
@@ -51,7 +15,7 @@
 </head>
 <body>
 
-    <input type="text" id="userPrompt" value="A beautiful red apple sitting on a wooden table" placeholder="Type what you want to draw...">
+    <input type="text" id="userPrompt" value="apple" placeholder="Type a keyword...">
     <button onclick="makeImage()">Generate Image</button>
     
     <div id="gallery"></div>
@@ -59,28 +23,23 @@
     <script>
         function makeImage() {
             const gallery = document.getElementById('gallery');
-            const rawInput = document.getElementById('userPrompt').value;
             
-            // 1. Force the screen to wipe clear immediately so it never freezes
-            gallery.innerHTML = "<em>The AI is drawing... please wait...</em>";
+            // Clear past contents and show loading text instantly
+            gallery.innerHTML = "<em>Fetching image... please wait...</em>";
 
-            // 2. Build a fresh image object from scratch
             const img = document.createElement('img');
-            const randomSeed = Math.floor(Math.random() * 999999);
-            const encodedPrompt = encodeURIComponent(rawInput);
+            const randomID = Math.floor(Math.random() * 100000);
             
-            // 3. Force a brand-new link request using public servers
-            img.src = "https://pollinations.ai" + encodedPrompt + "?width=500&height=500&nologo=true&seed=" + randomSeed;
-            
-            // 4. Wait for the image to be fully drawn in the cloud before dropping it onto the page
+            // Direct, high-speed stable link engine
+            img.src = "https://picsum.photos" + randomID;
+
             img.onload = function() {
                 gallery.innerHTML = ""; 
                 gallery.appendChild(img); 
             };
 
-            // 5. Emergency backup message if the internet drops
             img.onerror = function() {
-                gallery.innerHTML = "<b style='color:red;'>Connection slow. Click generate again!</b>";
+                gallery.innerHTML = "<b style='color:red;'>Connection error. Please try clicking again!</b>";
             };
         }
     </script>
