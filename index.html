@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal AI Sandbox</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 40px; background: #fafafa; }
+        input { font-size: 16px; padding: 12px; width: 350px; border-radius: 6px; border: 1px solid #ccc; margin-right: 10px; }
+        button { font-size: 16px; padding: 12px 24px; cursor: pointer; border-radius: 6px; border: 1px solid #ddd; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button:hover { background: #f5f5f5; }
+        #gallery { margin-top: 25px; }
+        img { width: 500px; height: 500px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="userPrompt" value="A beautiful red apple sitting on a wooden table" placeholder="Type what you want to draw...">
+    <button onclick="makeImage()">Generate Image</button>
+    
+    <div id="gallery"></div>
+
+    <script>
+        function makeImage() {
+            const gallery = document.getElementById('gallery');
+            const rawInput = document.getElementById('userPrompt').value;
+            
+            gallery.innerHTML = "<em>The AI is drawing... please wait...</em>";
+
+            const randomSeed = Math.floor(Math.random() * 100000);
+            const encodedPrompt = encodeURIComponent(rawInput);
+            const imageUrl = `https://pollinations.ai{encodedPrompt}?width=500&height=500&nologo=true&seed=${randomSeed}`;
+            
+            gallery.innerHTML = `<img src="${imageUrl}" alt="AI Image" />`;
+        }
+    </script>
+
+</body>
