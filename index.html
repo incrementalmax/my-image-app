@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal AI Sandbox</title>
+    <title>AI Generator</title>
     <style>
         body { font-family: sans-serif; text-align: center; padding: 40px; background: #fafafa; }
         input { font-size: 16px; padding: 12px; width: 350px; border-radius: 6px; border: 1px solid #ccc; margin-right: 10px; }
         button { font-size: 16px; padding: 12px 24px; cursor: pointer; border-radius: 6px; border: 1px solid #ddd; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         button:hover { background: #f5f5f5; }
-        #gallery { margin-top: 25px; }
+        #gallery { margin-top: 25px; min-height: 500px; display: flex; align-items: center; justify-content: center; }
         img { width: 500px; height: 500px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     </style>
 </head>
@@ -25,14 +25,29 @@
             const gallery = document.getElementById('gallery');
             const rawInput = document.getElementById('userPrompt').value;
             
+            // 1. Force the screen to wipe clear immediately so it never freezes
             gallery.innerHTML = "<em>The AI is drawing... please wait...</em>";
 
-            const randomSeed = Math.floor(Math.random() * 100000);
+            // 2. Build a fresh image object from scratch
+            const img = document.createElement('img');
+            const randomSeed = Math.floor(Math.random() * 999999);
             const encodedPrompt = encodeURIComponent(rawInput);
-            const imageUrl = `https://pollinations.ai{encodedPrompt}?width=500&height=500&nologo=true&seed=${randomSeed}`;
             
-            gallery.innerHTML = `<img src="${imageUrl}" alt="AI Image" />`;
+            // 3. Force a brand-new link request using public servers
+            img.src = "https://pollinations.ai" + encodedPrompt + "?width=500&height=500&nologo=true&seed=" + randomSeed;
+            
+            // 4. Wait for the image to be fully drawn in the cloud before dropping it onto the page
+            img.onload = function() {
+                gallery.innerHTML = ""; 
+                gallery.appendChild(img); 
+            };
+
+            // 5. Emergency backup message if the internet drops
+            img.onerror = function() {
+                gallery.innerHTML = "<b style='color:red;'>Connection slow. Click generate again!</b>";
+            };
         }
     </script>
 
 </body>
+</html>
